@@ -18,7 +18,7 @@ public class OpenApiConfig {
         public OpenAPI customOpenAPI() {
                 return new OpenAPI()
                         .info(new Info()
-                                .title("CDL RERA API")
+                                .title("CDL Commercial API")
                                 .version("1.0")
                                 .description("API documentation with JWT auth"))
                         .addSecurityItem(new SecurityRequirement().addList(BEARER_AUTH))

@@ -11,17 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WorkflowFinalizationService {
 
-    private final BuildPartnerService buildPartnerService;
 
-    private final RealEstateAssestService realEstateAssestService;
-
-    private final CapitalPartnerService capitalPartnerService;
-
-    private final FundEgressService fundEgressService;
-
-    private final PendingFundIngressService pendingFundIngressService;
-
-    private final SuretyBondService suretyBondService;
 
     public void finalizeWorkflow(WorkflowRequest request) {
         String moduleType = request.getModuleName();  // e.g. "PAYMENT", "BUILD_PARTNER", "BUILD_PARTNER_ASSETS"
@@ -29,12 +19,12 @@ public class WorkflowFinalizationService {
        TaskStatus status = request.getTaskStatus();
 
         switch (moduleType) {
-            case "BUILD_PARTNER" -> buildPartnerService.finalizeBuildPartner(moduleId, status);
+           /* case "BUILD_PARTNER" -> buildPartnerService.finalizeBuildPartner(moduleId, status);
             case "BUILD_PARTNER_ASSEST" -> realEstateAssestService.finalizeRealEstateAssest(moduleId, status);
             case "PAYMENTS" -> fundEgressService.finalizeFundEgress(moduleId, status);
             case "CAPITAL_PARTNER" -> capitalPartnerService.finalizeCapitalPartner(moduleId, status);
             case "TRANSACTIONS" -> pendingFundIngressService.finalizeDeposit(moduleId, status);
-            case "SURETY_BOND" -> suretyBondService.finalizeSuretyBond(moduleId,status);
+            case "SURETY_BOND" -> suretyBondService.finalizeSuretyBond(moduleId,status);*/
             default -> throw new IllegalArgumentException("Unsupported module type: " + moduleType);
         }
     }

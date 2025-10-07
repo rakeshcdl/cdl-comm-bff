@@ -7,7 +7,7 @@ spring:
   flyway:
     enabled: false
   datasource:
-    url: jdbc:postgresql://103.181.200.143:5432/rera-cdl-dev?sslmode=disable
+    url: jdbc:postgresql://103.181.200.143:5432/comm-cdl-dev?sslmode=disable
     username: postgres
     password: cdl@120813
 
@@ -53,7 +53,7 @@ springdoc:
     operations-sorter: alpha
     tags-sorter: alpha
 server:
-  port: 8081
+  port: 8083
   ssl:
     enabled: false
     key-store: classpath:keystore.p12
