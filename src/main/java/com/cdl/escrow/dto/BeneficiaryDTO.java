@@ -35,13 +35,13 @@ public class BeneficiaryDTO implements Serializable {
 
     private Boolean active;
 
-    private ApplicationSettingDTO accountType;
+    private ApplicationSettingDTO accountTypeDTO;
 
-    private ApplicationSettingDTO transferType;
+    private ApplicationSettingDTO transferTypeDTO;
 
-    private ApplicationSettingDTO role;
+    private ApplicationSettingDTO roleDTO;
 
-    private TaskStatusDTO taskStatus;
+    private TaskStatusDTO taskStatusDTO;
 
     //private Set<PartyDocumentDTO> documents = new HashSet<>();
 
