@@ -1,4 +1,37 @@
 package com.cdl.escrow.criteria;
 
-public class BusinessCalendarCriteria {
+
+import com.cdl.escrow.filter.BooleanFilter;
+import com.cdl.escrow.filter.LongFilter;
+import com.cdl.escrow.filter.StringFilter;
+import com.cdl.escrow.filter.ZonedDateTimeFilter;
+import lombok.*;
+
+import java.io.Serializable;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+public class BusinessCalendarCriteria implements Serializable {
+
+    private LongFilter id;
+
+    private StringFilter uuid;
+
+    private StringFilter calendarName;
+
+    private ZonedDateTimeFilter nonWorkingDate;
+
+    private BooleanFilter isEnabled;
+
+    private LongFilter deductionToHappenDTO;
+
+    private LongFilter taskStatusDTO;
+
+    private BooleanFilter enabled ;
+
+    private BooleanFilter deleted ;
 }

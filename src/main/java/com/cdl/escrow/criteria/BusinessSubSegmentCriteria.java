@@ -13,15 +13,19 @@ import java.io.Serializable;
 @ToString
 @Getter
 @Setter
-public class CountryCriteria implements Serializable {
+public class BusinessSubSegmentCriteria implements Serializable {
 
     private LongFilter id;
 
-    private StringFilter uuid;
+    private StringFilter UUID;
 
-    private StringFilter description;
+    private StringFilter subSegmentName;
+
+    private StringFilter subSegmentDescription;
 
     private BooleanFilter active;
+
+    private LongFilter businessSegmentNameId;
 
     private LongFilter taskStatusId;
 
