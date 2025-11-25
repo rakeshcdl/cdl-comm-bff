@@ -4,14 +4,14 @@ import com.cdl.escrow.criteria.AccountTypeCategoryCriteria;
 import com.cdl.escrow.criteria.AppLanguageCodeCriteria;
 import com.cdl.escrow.dto.AccountTypeCategoryDTO;
 import com.cdl.escrow.dto.AppLanguageCodeDTO;
-import com.cdl.escrow.entity.AccountPurpose;
-import com.cdl.escrow.entity.AccountTypeCategory;
-import com.cdl.escrow.entity.AppLanguageCode;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.AccountPurposeMapper;
 import com.cdl.escrow.mapper.AccountTypeCategoryMapper;
 import com.cdl.escrow.repository.AccountPurposeRepository;
 import com.cdl.escrow.repository.AccountTypeCategoryRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,6 +45,13 @@ public class AccountTypeCategoryCriteriaService extends BaseSpecificationBuilder
                 addStringFilter(cb, root, predicates, "typeCode", criteria.getTypeCode(), true);
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getAccountTypeId() != null) {
+                    Join<AccountTypeCategory, AccountType> join = root.join("accountType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAccountTypeId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

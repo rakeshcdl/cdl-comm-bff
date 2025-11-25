@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.AgreementSignatoryCriteria;
 import com.cdl.escrow.dto.AgreementSignatoryDTO;
-import com.cdl.escrow.entity.AgreementSignatory;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.AgreementSignatoryMapper;
 import com.cdl.escrow.repository.AgreementSignatoryRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,6 +54,23 @@ public class AgreementSignatoryCriteriaService extends BaseSpecificationBuilder<
 
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getAuthorizedSignatoryId() != null) {
+                    Join<AgreementSignatory, AuthorizedSignatory> join = root.join("authorizedSignatory", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAuthorizedSignatoryId());
+                }
+
+                if (criteria.getPartyId() != null) {
+                    Join<AgreementSignatory, Party> join = root.join("party", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getPartyId());
+                }
+
+                if (criteria.getEscrowAgreementId() != null) {
+                    Join<AgreementSignatory, EscrowAgreement> join = root.join("escrowAgreement", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getEscrowAgreementId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

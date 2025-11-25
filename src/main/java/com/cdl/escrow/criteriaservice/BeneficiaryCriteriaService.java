@@ -2,10 +2,13 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.BeneficiaryCriteria;
 import com.cdl.escrow.dto.BeneficiaryDTO;
+import com.cdl.escrow.entity.ApplicationSetting;
 import com.cdl.escrow.entity.Beneficiary;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.BeneficiaryMapper;
 import com.cdl.escrow.repository.BeneficiaryRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -51,6 +54,25 @@ public class BeneficiaryCriteriaService extends BaseSpecificationBuilder<Benefic
 
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getAccountTypeId() != null) {
+                    Join<Beneficiary, ApplicationSetting> join = root.join("accountType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAccountTypeId());
+                }
+
+                if (criteria.getTransferTypeId() != null) {
+                    Join<Beneficiary, ApplicationSetting> join = root.join("transferType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getTransferTypeId());
+                }
+
+                if (criteria.getRoleId() != null) {
+                    Join<Beneficiary, ApplicationSetting> join = root.join("role", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getRoleId());
+                }
+
+
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

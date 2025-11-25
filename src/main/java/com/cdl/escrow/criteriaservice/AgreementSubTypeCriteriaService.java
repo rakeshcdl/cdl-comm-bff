@@ -2,10 +2,15 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.AgreementSubTypeCriteria;
 import com.cdl.escrow.dto.AgreementSubTypeDTO;
+import com.cdl.escrow.entity.AgreementSignatory;
 import com.cdl.escrow.entity.AgreementSubType;
+import com.cdl.escrow.entity.AgreementType;
+import com.cdl.escrow.entity.AuthorizedSignatory;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.AgreementSubTypeMapper;
 import com.cdl.escrow.repository.AgreementSubTypeRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -42,6 +47,15 @@ public class AgreementSubTypeCriteriaService extends BaseSpecificationBuilder<Ag
 
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getAgreementTypeId() != null) {
+                    Join<AgreementSubType, AgreementType> join = root.join("agreementType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAgreementTypeId());
+                }
+
+
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

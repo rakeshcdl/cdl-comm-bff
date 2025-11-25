@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.EscrowAgreementCriteria;
 import com.cdl.escrow.dto.EscrowAgreementDTO;
-import com.cdl.escrow.entity.EscrowAgreement;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.EscrowAgreementMapper;
 import com.cdl.escrow.repository.EscrowAgreementRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,6 +49,54 @@ public class EscrowAgreementCriteriaService extends BaseSpecificationBuilder<Esc
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getClientNameId() != null) {
+                    Join<EscrowAgreement, Party> join = root.join("clientName", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getClientNameId());
+                }
+
+                if (criteria.getBusinessSegmentId() != null) {
+                    Join<EscrowAgreement, BusinessSegment> join = root.join("businessSegment", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getBusinessSegmentId());
+                }
+
+                if (criteria.getBusinessSubSegmentId() != null) {
+                    Join<EscrowAgreement, BusinessSubSegment> join = root.join("businessSubSegment", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getBusinessSubSegmentId());
+                }
+
+                if (criteria.getDealStatusId() != null) {
+                    Join<EscrowAgreement, ApplicationSetting> join = root.join("dealStatus", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDealStatusId());
+                }
+
+                if (criteria.getFeesId() != null) {
+                    Join<EscrowAgreement, ApplicationSetting> join = root.join("fees", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getFeesId());
+                }
+
+                if (criteria.getDealTypeId() != null) {
+                    Join<EscrowAgreement, AgreementType> join = root.join("dealType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDealTypeId());
+                }
+
+                if (criteria.getDealSubTypeId() != null) {
+                    Join<EscrowAgreement, AgreementSubType> join = root.join("dealSubType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDealSubTypeId());
+                }
+
+                if (criteria.getProductProgramId() != null) {
+                    Join<EscrowAgreement, ProductProgram> join = root.join("productProgram", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getProductProgramId());
+                }
+
+
+                if (criteria.getDealPriorityId() != null) {
+                    Join<EscrowAgreement, ApplicationSetting> join = root.join("dealPriority", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDealPriorityId());
+                }
 
             }
 

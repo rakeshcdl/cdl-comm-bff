@@ -2,10 +2,13 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.PartyCriteria;
 import com.cdl.escrow.dto.PartyDTO;
+import com.cdl.escrow.entity.ApplicationSetting;
 import com.cdl.escrow.entity.Party;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.PartyMapper;
 import com.cdl.escrow.repository.PartyRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -55,6 +58,20 @@ public class PartyCriteriaService extends BaseSpecificationBuilder<Party> implem
                 addStringFilter(cb, root, predicates, "additionalRemarks", criteria.getAdditionalRemarks(), true);
                 addStringFilter(cb, root, predicates, "relationshipManagerName", criteria.getRelationshipManagerName(), true);
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
+
+
+                // relationships
+
+                if (criteria.getPartyConstituentId() != null) {
+                    Join<Party, ApplicationSetting> join = root.join("partyConstituent", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getPartyConstituentId());
+                }
+
+                if (criteria.getRoleId() != null) {
+                    Join<Party, ApplicationSetting> join = root.join("role", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getRoleId());
+                }
+
 
             }
 

@@ -27,9 +27,9 @@ public class BusinessCalendarCriteria implements Serializable {
 
     private BooleanFilter isEnabled;
 
-    private LongFilter deductionToHappenDTO;
+    private LongFilter deductionToHappenId;
 
-    private LongFilter taskStatusDTO;
+    private LongFilter taskStatusId;
 
     private BooleanFilter enabled ;
 

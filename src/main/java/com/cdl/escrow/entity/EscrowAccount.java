@@ -85,15 +85,15 @@ public class EscrowAccount implements Serializable {
     private ApplicationSetting unitaryPayment;
 
     @ManyToOne
-   @JsonIgnore
+    @JsonIgnore
     private AccountType accountType;
 
     @ManyToOne
-   @JsonIgnore
+    @JsonIgnore
     private AccountTypeCategory accountTypeCategory;
 
     @ManyToOne
-   @JsonIgnore
+    @JsonIgnore
     private EscrowAgreement escrowAgreement;
 
     @OneToMany(mappedBy = "escrowAccount")
@@ -108,8 +108,8 @@ public class EscrowAccount implements Serializable {
     @JsonIgnore
     private Set<BulkPaymentUpload> bulkUploads = new HashSet<>();
 
-    private Boolean enabled ;
+    private Boolean enabled;
 
-    private Boolean deleted ;
+    private Boolean deleted;
 
 }

@@ -2,10 +2,14 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.BusinessSegmentCriteria;
 import com.cdl.escrow.dto.BusinessSegmentDTO;
+import com.cdl.escrow.entity.ApplicationSetting;
+import com.cdl.escrow.entity.BusinessCalendar;
 import com.cdl.escrow.entity.BusinessSegment;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.BusinessSegmentMapper;
 import com.cdl.escrow.repository.BusinessSegmentRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,6 +45,8 @@ public class BusinessSegmentCriteriaService extends BaseSpecificationBuilder<Bus
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

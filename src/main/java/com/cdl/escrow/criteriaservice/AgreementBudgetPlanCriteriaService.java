@@ -1,17 +1,13 @@
 package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.AgreementBudgetPlanCriteria;
-import com.cdl.escrow.criteria.AppLanguageCodeCriteria;
 import com.cdl.escrow.dto.AgreementBudgetPlanDTO;
-import com.cdl.escrow.dto.AppLanguageCodeDTO;
-import com.cdl.escrow.entity.AccountType;
-import com.cdl.escrow.entity.AgreementBudgetPlan;
-import com.cdl.escrow.entity.AppLanguageCode;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
-import com.cdl.escrow.mapper.AccountTypeMapper;
 import com.cdl.escrow.mapper.AgreementBudgetPlanMapper;
-import com.cdl.escrow.repository.AccountTypeRepository;
 import com.cdl.escrow.repository.AgreementBudgetPlanRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -44,6 +40,13 @@ public class AgreementBudgetPlanCriteriaService extends BaseSpecificationBuilder
                 addStringFilter(cb, root, predicates, "expenseMetadataJson", criteria.getExpenseMetadataJson(), true);
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getEscrowAgreementId() != null) {
+                    Join<AgreementBudgetPlan, EscrowAgreement> join = root.join("escrowAgreement", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getEscrowAgreementId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

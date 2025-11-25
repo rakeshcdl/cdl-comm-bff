@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.EscrowAccountCriteria;
 import com.cdl.escrow.dto.EscrowAccountDTO;
-import com.cdl.escrow.entity.EscrowAccount;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.EscrowAccountMapper;
 import com.cdl.escrow.repository.EscrowAccountRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,6 +54,58 @@ public class EscrowAccountCriteriaService extends BaseSpecificationBuilder<Escro
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getTaxPaymentId() != null) {
+                    Join<EscrowAccount, ApplicationSetting> join = root.join("taxPayment", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getTaxPaymentId());
+                }
+
+                if (criteria.getCurrencyId() != null) {
+                    Join<EscrowAccount, ApplicationSetting> join = root.join("currency", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getCurrencyId());
+                }
+
+                if (criteria.getAccountPurposeId() != null) {
+                    Join<EscrowAccount, AccountPurpose> join = root.join("accountPurpose", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAccountPurposeId());
+                }
+
+                if (criteria.getAccountCategoryId() != null) {
+                    Join<EscrowAccount, ApplicationSetting> join = root.join("accountCategory", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAccountCategoryId());
+                }
+
+                if (criteria.getPrimaryAccountId() != null) {
+                    Join<EscrowAccount, ApplicationSetting> join = root.join("primaryAccount", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getPrimaryAccountId());
+                }
+
+                if (criteria.getBulkUploadProcessingId() != null) {
+                    Join<EscrowAccount, ApplicationSetting> join = root.join("bulkUploadProcessing", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getBulkUploadProcessingId());
+                }
+
+                if (criteria.getUnitaryPaymentId() != null) {
+                    Join<EscrowAccount, ApplicationSetting> join = root.join("unitaryPayment", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getUnitaryPaymentId());
+                }
+
+                if (criteria.getAccountTypeId() != null) {
+                    Join<EscrowAccount, AccountType> join = root.join("accountType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAccountTypeId());
+                }
+
+                if (criteria.getAccountTypeCategoryId() != null) {
+                    Join<EscrowAccount, AccountTypeCategory> join = root.join("accountTypeCategory", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAccountTypeCategoryId());
+                }
+
+                if (criteria.getEscrowAgreementId() != null) {
+                    Join<EscrowAccount, EscrowAgreement> join = root.join("escrowAgreement", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getEscrowAgreementId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.TransactionProcessingHistoryCriteria;
 import com.cdl.escrow.dto.TransactionProcessingHistoryDTO;
-import com.cdl.escrow.entity.TransactionProcessingHistory;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.TransactionProcessingHistoryMapper;
 import com.cdl.escrow.repository.TransactionProcessingHistoryRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -50,6 +52,18 @@ public class TransactionProcessingHistoryCriteriaService extends BaseSpecificati
 
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getStatusId() != null) {
+                    Join<TransactionProcessingHistory, ProcessingStatus> join = root.join("status", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getStatusId());
+                }
+
+                if (criteria.getStandingInstructionBeneficiaryId() != null) {
+                    Join<TransactionProcessingHistory, StandingInstructionBeneficiary> join = root.join("standingInstructionBeneficiary", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getStandingInstructionBeneficiaryId());
+                }
 
             }
 

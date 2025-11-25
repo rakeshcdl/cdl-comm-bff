@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.StandingInstructionCriteria;
 import com.cdl.escrow.dto.StandingInstructionDTO;
-import com.cdl.escrow.entity.StandingInstruction;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.StandingInstructionMapper;
 import com.cdl.escrow.repository.StandingInstructionRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -51,6 +53,45 @@ public class StandingInstructionCriteriaService extends BaseSpecificationBuilder
 
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getDealNoId() != null) {
+                    Join<StandingInstruction, EscrowAgreement> join = root.join("dealNo", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDealNoId());
+                }
+                if (criteria.getStatusId() != null) {
+                    Join<StandingInstruction, ApplicationSetting> join = root.join("status", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getStatusId());
+                }
+                if (criteria.getTransferTypeId() != null) {
+                    Join<StandingInstruction, ApplicationSetting> join = root.join("transferType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getTransferTypeId());
+                }
+                if (criteria.getOccurrenceId() != null) {
+                    Join<StandingInstruction, ApplicationSetting> join = root.join("occurrence", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getOccurrenceId());
+                }
+                if (criteria.getRecurringFrequencyId() != null) {
+                    Join<StandingInstruction, ApplicationSetting> join = root.join("recurringFrequency", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getRecurringFrequencyId());
+                }
+                if (criteria.getHolidaySetupId() != null) {
+                    Join<StandingInstruction, ApplicationSetting> join = root.join("holidaySetup", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getHolidaySetupId());
+                }
+                if (criteria.getDependentScenarioId() != null) {
+                    Join<StandingInstruction, ApplicationSetting> join = root.join("dependentScenario", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDependentScenarioId());
+                }
+                if (criteria.getDependenceId() != null) {
+                    Join<StandingInstruction, StandingInstruction> join = root.join("dependence", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDependenceId());
+                }
+                if (criteria.getFormAccountDrId() != null) {
+                    Join<StandingInstruction, EscrowAccount> join = root.join("formAccountDr", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getFormAccountDrId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

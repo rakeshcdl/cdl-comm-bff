@@ -2,10 +2,13 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.BusinessSubSegmentCriteria;
 import com.cdl.escrow.dto.BusinessSubSegmentDTO;
+import com.cdl.escrow.entity.BusinessSegment;
 import com.cdl.escrow.entity.BusinessSubSegment;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.BusinessSubSegmentMapper;
 import com.cdl.escrow.repository.BusinessSubSegmentRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,6 +44,13 @@ public class BusinessSubSegmentCriteriaService extends BaseSpecificationBuilder<
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getBusinessSegmentNameId() != null) {
+                    Join<BusinessSubSegment, BusinessSegment> join = root.join("businessSegmentName", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getBusinessSegmentNameId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

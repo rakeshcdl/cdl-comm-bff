@@ -1,17 +1,14 @@
 package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.AccountPurposeCriteria;
-import com.cdl.escrow.criteria.AppLanguageCodeCriteria;
 import com.cdl.escrow.dto.AccountPurposeDTO;
-import com.cdl.escrow.dto.AppLanguageCodeDTO;
 import com.cdl.escrow.entity.AccountPurpose;
-import com.cdl.escrow.entity.AppLanguageCode;
-import com.cdl.escrow.entity.ApplicationModule;
+import com.cdl.escrow.entity.ApplicationSetting;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.AccountPurposeMapper;
-import com.cdl.escrow.mapper.ApplicationModuleMapper;
 import com.cdl.escrow.repository.AccountPurposeRepository;
-import com.cdl.escrow.repository.ApplicationModuleRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,6 +44,15 @@ public class AccountPurposeCriteriaService extends BaseSpecificationBuilder<Acco
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getCriticalityId() != null) {
+                    Join<AccountPurpose, ApplicationSetting> join = root.join("criticality", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getCriticalityId());
+                }
+
+
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

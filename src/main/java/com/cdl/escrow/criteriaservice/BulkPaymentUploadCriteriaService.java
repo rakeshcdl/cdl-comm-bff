@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.BulkPaymentUploadCriteria;
 import com.cdl.escrow.dto.BulkPaymentUploadDTO;
-import com.cdl.escrow.entity.BulkPaymentUpload;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.BulkPaymentUploadMapper;
 import com.cdl.escrow.repository.BulkPaymentUploadRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -55,6 +57,34 @@ public class BulkPaymentUploadCriteriaService extends BaseSpecificationBuilder<B
                 addStringFilter(cb, root, predicates, "validationErrorMessage", criteria.getValidationErrorMessage(), true);
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getPartyId() != null) {
+                    Join<BulkPaymentUpload, Party> join = root.join("party", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getPartyId());
+                }
+
+                if (criteria.getEscrowAccountId() != null) {
+                    Join<BulkPaymentUpload, EscrowAgreement> join = root.join("escrowAgreement", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getEscrowAccountId());
+                }
+
+                if (criteria.getEscrowAccountId() != null) {
+                    Join<BulkPaymentUpload, EscrowAccount> join = root.join("escrowAccount", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getEscrowAccountId());
+                }
+
+                if (criteria.getTransactionTypeId() != null) {
+                    Join<BulkPaymentUpload, ApplicationSetting> join = root.join("transactionType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getTransactionTypeId());
+                }
+
+                if (criteria.getCurrencyId() != null) {
+                    Join<BulkPaymentUpload, ApplicationSetting> join = root.join("currency", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getCurrencyId());
+                }
+
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

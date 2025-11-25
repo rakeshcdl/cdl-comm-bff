@@ -2,10 +2,15 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.ScheduledJobCriteria;
 import com.cdl.escrow.dto.ScheduledJobDTO;
+import com.cdl.escrow.entity.EscrowAgreement;
+import com.cdl.escrow.entity.ReconciledTransaction;
 import com.cdl.escrow.entity.ScheduledJob;
+import com.cdl.escrow.entity.StandingInstruction;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.ScheduledJobMapper;
 import com.cdl.escrow.repository.ScheduledJobRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,6 +50,13 @@ public class ScheduledJobCriteriaService extends BaseSpecificationBuilder<Schedu
                 addStringFilter(cb, root, predicates, "remarks", criteria.getRemarks(),true);
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getStandingInstructionId() != null) {
+                    Join<ScheduledJob, StandingInstruction> join = root.join("standingInstruction", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getStandingInstructionId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

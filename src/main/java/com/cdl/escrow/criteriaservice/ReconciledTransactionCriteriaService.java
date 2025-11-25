@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.ReconciledTransactionCriteria;
 import com.cdl.escrow.dto.ReconciledTransactionDTO;
-import com.cdl.escrow.entity.ReconciledTransaction;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.ReconciledTransactionMapper;
 import com.cdl.escrow.repository.ReconciledTransactionRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -63,6 +65,38 @@ public class ReconciledTransactionCriteriaService extends BaseSpecificationBuild
                 addBooleanFilter(cb, root, predicates, "tasUpdateEnabledFlag", criteria.getTasUpdateEnabledFlag());
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getEscrowAgreementId() != null) {
+                    Join<ReconciledTransaction, EscrowAgreement> join = root.join("escrowAgreement", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getEscrowAgreementId());
+                }
+                if (criteria.getBucketTypeId() != null) {
+                    Join<ReconciledTransaction, ApplicationSetting> join = root.join("bucketType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getBucketTypeId());
+                }
+
+                if (criteria.getSubBucketTypeId() != null) {
+                    Join<ReconciledTransaction, ApplicationSetting> join = root.join("subBucketType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getSubBucketTypeId());
+                }
+
+                if (criteria.getDepositModeId() != null) {
+                    Join<ReconciledTransaction, ApplicationSetting> join = root.join("depositMode", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDepositModeId());
+                }
+
+                if (criteria.getEscrowAccountId() != null) {
+                    Join<ReconciledTransaction, EscrowAccount> join = root.join("escrowAccount", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getEscrowAccountId());
+                }
+
+                if (criteria.getNonReconTransactionId() != null) {
+                    Join<ReconciledTransaction, UnreconciledTransaction> join = root.join("nonReconTransaction", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getNonReconTransactionId());
+                }
+
 
             }
 

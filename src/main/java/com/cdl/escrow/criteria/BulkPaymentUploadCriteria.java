@@ -56,7 +56,7 @@ public class BulkPaymentUploadCriteria implements Serializable {
 
     private BooleanFilter active;
 
-    private LongFilter partyDTO;
+    private LongFilter partyId;
 
     private LongFilter escrowAgreementId;
 

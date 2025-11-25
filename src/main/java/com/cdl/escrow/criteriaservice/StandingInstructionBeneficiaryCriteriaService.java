@@ -2,10 +2,12 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.StandingInstructionBeneficiaryCriteria;
 import com.cdl.escrow.dto.StandingInstructionBeneficiaryDTO;
-import com.cdl.escrow.entity.StandingInstructionBeneficiary;
+import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.StandingInstructionBeneficiaryMapper;
 import com.cdl.escrow.repository.StandingInstructionBeneficiaryRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,6 +47,28 @@ public class StandingInstructionBeneficiaryCriteriaService extends BaseSpecifica
                 addStringFilter(cb, root, predicates, "paymentModeCode", criteria.getPaymentModeCode(), true);
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getBeneficiaryNameId() != null) {
+                    Join<StandingInstructionBeneficiary, Beneficiary> join = root.join("beneficiaryName", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getBeneficiaryNameId());
+                }
+
+                if (criteria.getPaymentModeId() != null) {
+                    Join<StandingInstructionBeneficiary, ApplicationSetting> join = root.join("paymentMode", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getStandingInstructionId());
+                }
+
+                if (criteria.getCurrencyId() != null) {
+                    Join<StandingInstructionBeneficiary, ApplicationSetting> join = root.join("currency", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getCurrencyId());
+                }
+
+                if (criteria.getStandingInstructionId() != null) {
+                    Join<StandingInstructionBeneficiary, StandingInstruction> join = root.join("standingInstruction", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getStandingInstructionId());
+                }
 
             }
 

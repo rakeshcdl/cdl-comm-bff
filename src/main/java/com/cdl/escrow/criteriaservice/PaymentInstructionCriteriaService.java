@@ -2,10 +2,13 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.PaymentInstructionCriteria;
 import com.cdl.escrow.dto.PaymentInstructionDTO;
+import com.cdl.escrow.entity.ApplicationSetting;
 import com.cdl.escrow.entity.PaymentInstruction;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.PaymentInstructionMapper;
 import com.cdl.escrow.repository.PaymentInstructionRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -63,6 +66,29 @@ public class PaymentInstructionCriteriaService extends BaseSpecificationBuilder<
 
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+
+                // relationships
+
+                if (criteria.getPaymentTypeId() != null) {
+                    Join<PaymentInstruction, ApplicationSetting> join = root.join("paymentType", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getPaymentTypeId());
+                }
+
+                if (criteria.getAdhocPaymentId() != null) {
+                    Join<PaymentInstruction, ApplicationSetting> join = root.join("adhocPayment", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAdhocPaymentId());
+                }
+
+                if (criteria.getPurposeId() != null) {
+                    Join<PaymentInstruction, ApplicationSetting> join = root.join("purpose", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getPurposeId());
+                }
+
+                if (criteria.getBeneficiaryCurrencyId() != null) {
+                    Join<PaymentInstruction, ApplicationSetting> join = root.join("beneficiaryCurrency", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getBeneficiaryCurrencyId());
+                }
 
             }
 

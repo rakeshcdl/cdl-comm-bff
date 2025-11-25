@@ -2,10 +2,15 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.BusinessCalendarCriteria;
 import com.cdl.escrow.dto.BusinessCalendarDTO;
+import com.cdl.escrow.entity.ApplicationSetting;
+import com.cdl.escrow.entity.BulkPaymentUpload;
 import com.cdl.escrow.entity.BusinessCalendar;
+import com.cdl.escrow.entity.Party;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.BusinessCalendarMapper;
 import com.cdl.escrow.repository.BusinessCalendarRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -42,6 +47,13 @@ public class BusinessCalendarCriteriaService extends BaseSpecificationBuilder<Bu
 
                 addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
                 addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
+                // relationships
+
+                if (criteria.getDeductionToHappenId() != null) {
+                    Join<BusinessCalendar, ApplicationSetting> join = root.join("deductionToHappen", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getDeductionToHappenId());
+                }
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));
