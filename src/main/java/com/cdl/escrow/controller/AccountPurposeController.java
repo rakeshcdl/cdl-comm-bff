@@ -1,9 +1,11 @@
 package com.cdl.escrow.controller;
 
 
+import com.cdl.escrow.criteria.AccountPurposeCriteria;
 import com.cdl.escrow.criteriaservice.AccountPurposeCriteriaService;
 import com.cdl.escrow.dto.AccountPurposeDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.AccountPurposeRepository;
 import com.cdl.escrow.service.AccountPurposeService;
 import jakarta.validation.Valid;
@@ -13,8 +15,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ import java.util.Objects;
 public class AccountPurposeController {
     private final AccountPurposeService accountPurposeService;
 
-   // private final AccountPurposeCriteriaService accountPurposeCriteriaService;
+    private final AccountPurposeCriteriaService accountPurposeCriteriaService;
 
     private final AccountPurposeRepository repository;
 
     private static final String ENTITY_NAME = "ACCOUNT-PURPOSE";
 
- /*   @GetMapping
+    @GetMapping
     public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
         Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurposes(

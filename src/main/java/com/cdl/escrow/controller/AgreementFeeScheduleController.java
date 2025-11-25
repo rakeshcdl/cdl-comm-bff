@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.AgreementFeeScheduleCriteria;
 import com.cdl.escrow.criteriaservice.AgreementFeeScheduleCriteriaService;
 import com.cdl.escrow.dto.AgreementFeeScheduleDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.AgreementFeeScheduleRepository;
 import com.cdl.escrow.service.AgreementFeeScheduleService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class AgreementFeeScheduleController {
 
     private final AgreementFeeScheduleService agreementFeeScheduleService;
 
-   // private final AgreementFeeScheduleCriteriaService agreementFeeScheduleCriteriaService;
+    private final AgreementFeeScheduleCriteriaService agreementFeeScheduleCriteriaService;
 
     private final AgreementFeeScheduleRepository repository;
 
     private static final String ENTITY_NAME = "AGREEMENT-FEE-SCHEDULE";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
+   @GetMapping
+    public ResponseEntity<Page<AgreementFeeScheduleDTO>> getAllAgreementFeeScheduleCriteria(@ParameterObject AgreementFeeScheduleCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+        Page<AgreementFeeScheduleDTO> page = agreementFeeScheduleCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<AgreementFeeScheduleDTO>> getAllAgreementFeeSchedule(

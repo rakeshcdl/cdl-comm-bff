@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.AccountTypeCriteria;
 import com.cdl.escrow.criteriaservice.AccountTypeCriteriaService;
 import com.cdl.escrow.dto.AccountTypeDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.AccountTypeRepository;
 import com.cdl.escrow.service.AccountTypeService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class AccountTypeController {
 
     private final AccountTypeService accountTypeService;
 
-   // private final AccountTypeCriteriaService accountTypeCriteriaService;
+    private final AccountTypeCriteriaService accountTypeCriteriaService;
 
     private final AccountTypeRepository repository;
 
     private static final String ENTITY_NAME = "ACCOUNT-TYPE";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
-                                                                                   @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+    @GetMapping
+    public ResponseEntity<Page<AccountTypeDTO>> getAllAccountTypeCriteria(@ParameterObject AccountTypeCriteria criteria,
+                                                                          @ParameterObject Pageable pageable) {
+        Page<AccountTypeDTO> page = accountTypeCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<AccountTypeDTO>> getAllAccountType(
@@ -99,6 +103,7 @@ public class AccountTypeController {
             return ResponseEntity.badRequest().body("AccountType deletion failed - ID: " + id);
         }
     }
+
     @DeleteMapping("/soft/{id}")
     public ResponseEntity<String> softDeleteAccountTypeById(@PathVariable Long id) {
         log.info("Soft deleting account type with ID: {}", id);

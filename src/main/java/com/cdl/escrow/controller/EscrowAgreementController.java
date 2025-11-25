@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.EscrowAgreementCriteria;
 import com.cdl.escrow.criteriaservice.EscrowAgreementCriteriaService;
 import com.cdl.escrow.dto.EscrowAgreementDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.EscrowAgreementRepository;
 import com.cdl.escrow.service.EscrowAgreementService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class EscrowAgreementController {
 
     private final EscrowAgreementService escrowAgreementService;
 
-  //  private final EscrowAgreementCriteriaService escrowAgreementCriteriaService;
+    private final EscrowAgreementCriteriaService escrowAgreementCriteriaService;
 
     private final EscrowAgreementRepository repository;
 
     private static final String ENTITY_NAME = "ESCROW-AGREEMENT";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
+    @GetMapping
+    public ResponseEntity<Page<EscrowAgreementDTO>> getAllEscrowAgreementCriteria(@ParameterObject EscrowAgreementCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+        Page<EscrowAgreementDTO> page = escrowAgreementCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<EscrowAgreementDTO>> getAllEscrowAgreement(

@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.GeneralLedgerAccountCriteria;
 import com.cdl.escrow.criteriaservice.GeneralLedgerAccountCriteriaService;
 import com.cdl.escrow.dto.GeneralLedgerAccountDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.GeneralLedgerAccountRepository;
 import com.cdl.escrow.service.GeneralLedgerAccountService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class GeneralLedgerAccountController {
 
     private final GeneralLedgerAccountService generalLedgerAccountService;
 
-   // private final GeneralLedgerAccountCriteriaService generalLedgerAccountCriteriaService;
+    private final GeneralLedgerAccountCriteriaService generalLedgerAccountCriteriaService;
 
     private final GeneralLedgerAccountRepository repository;
 
     private static final String ENTITY_NAME = "GENERAL-LEDGER-ACCOUNT";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
+    @GetMapping
+    public ResponseEntity<Page<GeneralLedgerAccountDTO>> getAllGeneralLedgerAccountCriteria(@ParameterObject GeneralLedgerAccountCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+        Page<GeneralLedgerAccountDTO> page = generalLedgerAccountCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<GeneralLedgerAccountDTO>> getAllGeneralLedgerAccount(

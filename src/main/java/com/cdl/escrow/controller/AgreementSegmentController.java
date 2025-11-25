@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.AgreementSegmentCriteria;
 import com.cdl.escrow.criteriaservice.AgreementSegmentCriteriaService;
 import com.cdl.escrow.dto.AgreementSegmentDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.AgreementSegmentRepository;
 import com.cdl.escrow.service.AgreementSegmentService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class AgreementSegmentController {
 
     private final AgreementSegmentService agreementSegmentService;
 
-    //private final AgreementSegmentCriteriaService agreementSegmentCriteriaService;
+    private final AgreementSegmentCriteriaService agreementSegmentCriteriaService;
 
     private final AgreementSegmentRepository repository;
 
     private static final String ENTITY_NAME = "AGREEMENT-SEGMENT";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
+    @GetMapping
+    public ResponseEntity<Page<AgreementSegmentDTO>> getAllAgreementSegmentCriteria(@ParameterObject AgreementSegmentCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+        Page<AgreementSegmentDTO> page = agreementSegmentCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<AgreementSegmentDTO>> getAllAgreementSegment(

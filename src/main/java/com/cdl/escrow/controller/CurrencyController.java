@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.CurrencyCriteria;
 import com.cdl.escrow.criteriaservice.CurrencyCriteriaService;
 import com.cdl.escrow.dto.CurrencyDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.CurrencyRepository;
 import com.cdl.escrow.service.CurrencyService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class CurrencyController {
 
     private final CurrencyService currencyService;
 
-    //private final CurrencyCriteriaService currencyCriteriaService;
+    private final CurrencyCriteriaService currencyCriteriaService;
 
     private final CurrencyRepository repository;
 
     private static final String ENTITY_NAME = "CURRENCY";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
+    @GetMapping
+    public ResponseEntity<Page<CurrencyDTO>> getAllCurrencyCriteria(@ParameterObject CurrencyCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+        Page<CurrencyDTO> page = currencyCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<CurrencyDTO>> getAllCurrency(

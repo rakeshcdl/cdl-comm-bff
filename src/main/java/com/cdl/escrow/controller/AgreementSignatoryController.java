@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.AgreementSignatoryCriteria;
 import com.cdl.escrow.criteriaservice.AgreementSignatoryCriteriaService;
 import com.cdl.escrow.dto.AgreementSignatoryDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.AgreementSignatoryRepository;
 import com.cdl.escrow.service.AgreementSignatoryService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class AgreementSignatoryController {
 
     private final AgreementSignatoryService agreementSignatoryService;
 
-   // private final AgreementSignatoryCriteriaService agreementSignatoryCriteriaService;
+   private final AgreementSignatoryCriteriaService agreementSignatoryCriteriaService;
 
     private final AgreementSignatoryRepository repository;
 
     private static final String ENTITY_NAME = "ACCOUNT-TYPE";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
+    @GetMapping
+    public ResponseEntity<Page<AgreementSignatoryDTO>> getAllAgreementSignatoryCriteria(@ParameterObject AgreementSignatoryCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+        Page<AgreementSignatoryDTO> page = agreementSignatoryCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<AgreementSignatoryDTO>> getAllAgreementSignatory(

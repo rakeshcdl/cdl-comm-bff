@@ -1,8 +1,10 @@
 package com.cdl.escrow.controller;
 
+import com.cdl.escrow.criteria.StandingInstructionCriteria;
 import com.cdl.escrow.criteriaservice.StandingInstructionCriteriaService;
 import com.cdl.escrow.dto.StandingInstructionDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
+import com.cdl.escrow.helper.PaginationUtil;
 import com.cdl.escrow.repository.StandingInstructionRepository;
 import com.cdl.escrow.service.StandingInstructionService;
 import jakarta.validation.Valid;
@@ -12,8 +14,10 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Objects;
 
@@ -25,19 +29,19 @@ public class StandingInstructionController {
 
     private final StandingInstructionService standingInstructionService;
 
-   // private final StandingInstructionCriteriaService standingInstructionCriteriaService;
+    private final StandingInstructionCriteriaService standingInstructionCriteriaService;
 
     private final StandingInstructionRepository repository;
 
     private static final String ENTITY_NAME = "STANDING-INSTRUCTION";
 
- /*   @GetMapping
-    public ResponseEntity<Page<AccountPurposeDTO>> getAllAccountPurpose(@ParameterObject AccountPurposeCriteria criteria,
+    @GetMapping
+    public ResponseEntity<Page<StandingInstructionDTO>> getAllStandingInstructionCriteria(@ParameterObject StandingInstructionCriteria criteria,
                                                                                    @ParameterObject Pageable pageable) {
-        Page<AccountPurposeDTO> page = accountPurposeCriteriaService.findByCriteria(criteria, pageable);
+        Page<StandingInstructionDTO> page = standingInstructionCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<StandingInstructionDTO>> getAllStandingInstruction(
