@@ -40,7 +40,7 @@ public class ReconciledTransaction implements Serializable {
 
     private BigDecimal transactionAmount;
 
-    private BigDecimal totalTransactionAmount; // if applicable
+    private BigDecimal totalTransactionAmount;
 
     private ZonedDateTime transactionDateTime;
 

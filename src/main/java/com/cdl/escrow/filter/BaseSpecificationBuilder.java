@@ -56,6 +56,19 @@ public abstract class BaseSpecificationBuilder<T> {
         }
     }
 
+    protected void addBigDecimalFilter(CriteriaBuilder cb, Root<T> root, List<Predicate> predicates, String field, BigDecimalFilter filter) {
+        if (filter != null) {
+            if (filter.getEquals() != null) predicates.add(cb.equal(root.get(field), filter.getEquals()));
+            if (filter.getNotEquals() != null) predicates.add(cb.notEqual(root.get(field), filter.getNotEquals()));
+            if (filter.getIn() != null && !filter.getIn().isEmpty()) predicates.add(root.get(field).in(filter.getIn()));
+            if (filter.getNotIn() != null && !filter.getNotIn().isEmpty()) predicates.add(cb.not(root.get(field).in(filter.getNotIn())));
+            if (filter.getGreaterThan() != null) predicates.add(cb.greaterThan(root.get(field), filter.getGreaterThan()));
+            if (filter.getLessThan() != null) predicates.add(cb.lessThan(root.get(field), filter.getLessThan()));
+            if (filter.getGreaterThanOrEqual() != null) predicates.add(cb.greaterThanOrEqualTo(root.get(field), filter.getGreaterThanOrEqual()));
+            if (filter.getLessThanOrEqual() != null) predicates.add(cb.lessThanOrEqualTo(root.get(field), filter.getLessThanOrEqual()));
+        }
+    }
+
     protected void addZonedDateTimeFilter(CriteriaBuilder cb, Root<T> root, List<Predicate> predicates, String field, ZonedDateTimeFilter filter) {
         if (filter != null) {
             if (filter.getEquals() != null) predicates.add(cb.equal(root.get(field), filter.getEquals()));
