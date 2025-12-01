@@ -5,7 +5,6 @@ import com.cdl.escrow.dto.AuthorizedSignatoryDTO;
 import com.cdl.escrow.entity.ApplicationSetting;
 import com.cdl.escrow.entity.Attachment;
 import com.cdl.escrow.entity.AuthorizedSignatory;
-import com.cdl.escrow.entity.PartyDocument;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.AuthorizedSignatoryMapper;
 import com.cdl.escrow.repository.AuthorizedSignatoryRepository;

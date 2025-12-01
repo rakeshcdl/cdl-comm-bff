@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,8 +27,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AttachmentDTO> getAllAttachment(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all attachment, page: {}", pageable.getPageNumber());
         Page<Attachment> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -37,26 +39,29 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AttachmentDTO> getAttachmentById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching attachment with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public AttachmentDTO saveAttachment(AttachmentDTO attachmentDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new attachment");
         Attachment entity = mapper.toEntity(attachmentDTO);
         Attachment saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public AttachmentDTO updateAttachment(Long id, AttachmentDTO attachmentDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating attachment with ID: {}", id);
 
         Attachment existing = repository.findById(id)
-                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
+                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("attachment not found with ID: " + id));
 
         // Optionally, update only mutable fields instead of full replacement
         Attachment toUpdate = mapper.toEntity(attachmentDTO);
@@ -67,11 +72,12 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteAttachmentById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting attachment with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("attachment not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -79,6 +85,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
+    @Transactional
     public boolean softDeleteAttachmentById(Long id) {
 
         return repository.findByIdAndDeletedFalse(id).map(entity -> {

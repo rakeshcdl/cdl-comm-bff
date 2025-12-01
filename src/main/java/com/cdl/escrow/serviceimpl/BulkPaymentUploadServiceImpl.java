@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,8 +27,9 @@ public class BulkPaymentUploadServiceImpl implements BulkPaymentUploadService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<BulkPaymentUploadDTO> getAllBulkPaymentUpload(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all bulk payment upload, page: {}", pageable.getPageNumber());
         Page<BulkPaymentUpload> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -37,26 +39,29 @@ public class BulkPaymentUploadServiceImpl implements BulkPaymentUploadService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<BulkPaymentUploadDTO> getBulkPaymentUploadById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching bulk payment upload with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public BulkPaymentUploadDTO saveBulkPaymentUpload(BulkPaymentUploadDTO bulkPaymentUploadDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new bulk payment upload");
         BulkPaymentUpload entity = mapper.toEntity(bulkPaymentUploadDTO);
         BulkPaymentUpload saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public BulkPaymentUploadDTO updateBulkPaymentUpload(Long id, BulkPaymentUploadDTO bulkPaymentUploadDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating bulk payment upload with ID: {}", id);
 
         BulkPaymentUpload existing = repository.findById(id)
-                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
+                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("bulk payment upload not found with ID: " + id));
 
         // Optionally, update only mutable fields instead of full replacement
         BulkPaymentUpload toUpdate = mapper.toEntity(bulkPaymentUploadDTO);
@@ -67,11 +72,12 @@ public class BulkPaymentUploadServiceImpl implements BulkPaymentUploadService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteBulkPaymentUploadById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting bulk payment upload with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("bulk payment upload not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -79,6 +85,7 @@ public class BulkPaymentUploadServiceImpl implements BulkPaymentUploadService {
     }
 
     @Override
+    @Transactional
     public boolean softDeleteBulkPaymentUploadById(Long id) {
 
         return repository.findByIdAndDeletedFalse(id).map(entity -> {

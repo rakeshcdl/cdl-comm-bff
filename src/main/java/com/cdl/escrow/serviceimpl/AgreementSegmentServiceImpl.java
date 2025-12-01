@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,8 +27,9 @@ public class AgreementSegmentServiceImpl implements AgreementSegmentService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AgreementSegmentDTO> getAllAgreementSegment(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all agreement segment, page: {}", pageable.getPageNumber());
         Page<AgreementSegment> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -37,23 +39,26 @@ public class AgreementSegmentServiceImpl implements AgreementSegmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AgreementSegmentDTO> getAgreementSegmentById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching agreement segment with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public AgreementSegmentDTO saveAgreementSegment(AgreementSegmentDTO agreementSegmentDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new agreement segment");
         AgreementSegment entity = mapper.toEntity(agreementSegmentDTO);
         AgreementSegment saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public AgreementSegmentDTO updateAgreementSegment(Long id, AgreementSegmentDTO agreementSegmentDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating agreement segment with ID: {}", id);
 
         AgreementSegment existing = repository.findById(id)
                 .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
@@ -67,11 +72,12 @@ public class AgreementSegmentServiceImpl implements AgreementSegmentService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteAgreementSegmentById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting agreement segment with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("agreement segment not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -79,6 +85,7 @@ public class AgreementSegmentServiceImpl implements AgreementSegmentService {
     }
 
     @Override
+    @Transactional
     public boolean softDeleteAgreementSegmentById(Long id) {
         return repository.findByIdAndDeletedFalse(id).map(entity -> {
             entity.setDeleted(true);

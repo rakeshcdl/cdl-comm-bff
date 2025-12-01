@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,8 +27,9 @@ public class AccountPurposeServiceImpl implements AccountPurposeService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AccountPurposeDTO> getAllAccountPurpose(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all account purpose, page: {}", pageable.getPageNumber());
         Page<AccountPurpose> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -37,26 +39,29 @@ public class AccountPurposeServiceImpl implements AccountPurposeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AccountPurposeDTO> getAccountPurposeById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching account purpose with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public AccountPurposeDTO saveAccountPurpose(AccountPurposeDTO accountPurposeDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new account purpose");
         AccountPurpose entity = mapper.toEntity(accountPurposeDTO);
         AccountPurpose saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public AccountPurposeDTO updateAccountPurpose(Long id, AccountPurposeDTO accountPurposeDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating account purpose with ID: {}", id);
 
         AccountPurpose existing = repository.findById(id)
-                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
+                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("account purpose not found with ID: " + id));
 
         // Optionally, update only mutable fields instead of full replacement
         AccountPurpose toUpdate = mapper.toEntity(accountPurposeDTO);
@@ -67,11 +72,12 @@ public class AccountPurposeServiceImpl implements AccountPurposeService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteAccountPurposeById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting account purpose with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("account purpose not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -79,6 +85,7 @@ public class AccountPurposeServiceImpl implements AccountPurposeService {
     }
 
     @Override
+    @Transactional
     public boolean softDeleteAccountPurposeById(Long id) {
 
         return repository.findByIdAndDeletedFalse(id).map(entity -> {

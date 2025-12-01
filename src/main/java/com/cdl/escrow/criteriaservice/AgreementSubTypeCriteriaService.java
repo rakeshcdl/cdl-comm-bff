@@ -2,10 +2,8 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.AgreementSubTypeCriteria;
 import com.cdl.escrow.dto.AgreementSubTypeDTO;
-import com.cdl.escrow.entity.AgreementSignatory;
 import com.cdl.escrow.entity.AgreementSubType;
 import com.cdl.escrow.entity.AgreementType;
-import com.cdl.escrow.entity.AuthorizedSignatory;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.AgreementSubTypeMapper;
 import com.cdl.escrow.repository.AgreementSubTypeRepository;

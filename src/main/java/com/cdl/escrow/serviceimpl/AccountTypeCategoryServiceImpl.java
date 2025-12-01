@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,8 +27,9 @@ public class AccountTypeCategoryServiceImpl implements AccountTypeCategoryServic
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AccountTypeCategoryDTO> getAllAccountTypeCategory(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all account type category, page: {}", pageable.getPageNumber());
         Page<AccountTypeCategory> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -37,26 +39,29 @@ public class AccountTypeCategoryServiceImpl implements AccountTypeCategoryServic
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AccountTypeCategoryDTO> getAccountTypeCategoryById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching account type category with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public AccountTypeCategoryDTO saveAccountTypeCategory(AccountTypeCategoryDTO accountTypeCategoryDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new account type category");
         AccountTypeCategory entity = mapper.toEntity(accountTypeCategoryDTO);
         AccountTypeCategory saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public AccountTypeCategoryDTO updateAccountTypeCategory(Long id, AccountTypeCategoryDTO accountTypeCategoryDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating account type category with ID: {}", id);
 
         AccountTypeCategory existing = repository.findById(id)
-                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
+                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("account type category not found with ID: " + id));
 
         // Optionally, update only mutable fields instead of full replacement
         AccountTypeCategory toUpdate = mapper.toEntity(accountTypeCategoryDTO);
@@ -67,11 +72,12 @@ public class AccountTypeCategoryServiceImpl implements AccountTypeCategoryServic
     }
 
     @Override
+    @Transactional
     public Boolean deleteAccountTypeCategoryById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting account type category with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("account type category not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -79,6 +85,7 @@ public class AccountTypeCategoryServiceImpl implements AccountTypeCategoryServic
     }
 
     @Override
+    @Transactional
     public boolean softDeleteAccountTypeCategoryById(Long id) {
 
         return repository.findByIdAndDeletedFalse(id).map(entity -> {

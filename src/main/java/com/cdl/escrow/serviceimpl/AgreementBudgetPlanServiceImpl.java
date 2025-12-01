@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,8 +27,9 @@ public class AgreementBudgetPlanServiceImpl implements AgreementBudgetPlanServic
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AgreementBudgetPlanDTO> getAllAgreementBudgetPlan(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all agreement budget plan, page: {}", pageable.getPageNumber());
         Page<AgreementBudgetPlan> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -37,26 +39,29 @@ public class AgreementBudgetPlanServiceImpl implements AgreementBudgetPlanServic
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AgreementBudgetPlanDTO> getAgreementBudgetPlanById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching agreement budget plan with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public AgreementBudgetPlanDTO saveAgreementBudgetPlan(AgreementBudgetPlanDTO agreementBudgetPlanDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new agreement budget plan");
         AgreementBudgetPlan entity = mapper.toEntity(agreementBudgetPlanDTO);
         AgreementBudgetPlan saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public AgreementBudgetPlanDTO updateAgreementBudgetPlan(Long id, AgreementBudgetPlanDTO agreementBudgetPlanDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating agreement budget plan with ID: {}", id);
 
         AgreementBudgetPlan existing = repository.findById(id)
-                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
+                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("agreement budget plan not found with ID: " + id));
 
         // Optionally, update only mutable fields instead of full replacement
         AgreementBudgetPlan toUpdate = mapper.toEntity(agreementBudgetPlanDTO);
@@ -67,11 +72,12 @@ public class AgreementBudgetPlanServiceImpl implements AgreementBudgetPlanServic
     }
 
     @Override
+    @Transactional
     public Boolean deleteAgreementBudgetPlanById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting agreement budget plan with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("agreement budget plan not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -79,6 +85,7 @@ public class AgreementBudgetPlanServiceImpl implements AgreementBudgetPlanServic
     }
 
     @Override
+    @Transactional
     public boolean softDeleteAgreementBudgetPlanById(Long id) {
 
         return repository.findByIdAndDeletedFalse(id).map(entity -> {

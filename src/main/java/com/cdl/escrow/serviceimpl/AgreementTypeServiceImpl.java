@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,8 +26,9 @@ public class AgreementTypeServiceImpl implements AgreementTypeService {
     private final AgreementTypeMapper mapper;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AgreementTypeDTO> getAllAgreementType(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all agreement type, page: {}", pageable.getPageNumber());
         Page<AgreementType> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -36,26 +38,29 @@ public class AgreementTypeServiceImpl implements AgreementTypeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AgreementTypeDTO> getAgreementTypeById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching agreement type with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public AgreementTypeDTO saveAgreementType(AgreementTypeDTO agreementTypeDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new agreement type");
         AgreementType entity = mapper.toEntity(agreementTypeDTO);
         AgreementType saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public AgreementTypeDTO updateAgreementType(Long id, AgreementTypeDTO agreementTypeDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating agreement type with ID: {}", id);
 
         AgreementType existing = repository.findById(id)
-                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
+                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("agreement type not found with ID: " + id));
 
         // Optionally, update only mutable fields instead of full replacement
         AgreementType toUpdate = mapper.toEntity(agreementTypeDTO);
@@ -66,11 +71,12 @@ public class AgreementTypeServiceImpl implements AgreementTypeService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteAgreementTypeById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting agreement type with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("agreement type not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -78,6 +84,7 @@ public class AgreementTypeServiceImpl implements AgreementTypeService {
     }
 
     @Override
+    @Transactional
     public boolean softDeleteAgreementTypeById(Long id) {
         return repository.findByIdAndDeletedFalse(id).map(entity -> {
             entity.setDeleted(true);

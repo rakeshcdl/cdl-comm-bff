@@ -1,14 +1,10 @@
 package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.AccountTypeCategoryCriteria;
-import com.cdl.escrow.criteria.AppLanguageCodeCriteria;
 import com.cdl.escrow.dto.AccountTypeCategoryDTO;
-import com.cdl.escrow.dto.AppLanguageCodeDTO;
 import com.cdl.escrow.entity.*;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
-import com.cdl.escrow.mapper.AccountPurposeMapper;
 import com.cdl.escrow.mapper.AccountTypeCategoryMapper;
-import com.cdl.escrow.repository.AccountPurposeRepository;
 import com.cdl.escrow.repository.AccountTypeCategoryRepository;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;

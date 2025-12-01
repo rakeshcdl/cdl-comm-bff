@@ -2,8 +2,6 @@ package com.cdl.escrow.criteriaservice;
 
 import com.cdl.escrow.criteria.ScheduledJobCriteria;
 import com.cdl.escrow.dto.ScheduledJobDTO;
-import com.cdl.escrow.entity.EscrowAgreement;
-import com.cdl.escrow.entity.ReconciledTransaction;
 import com.cdl.escrow.entity.ScheduledJob;
 import com.cdl.escrow.entity.StandingInstruction;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;

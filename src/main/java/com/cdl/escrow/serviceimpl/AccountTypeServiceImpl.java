@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -27,8 +28,9 @@ public class AccountTypeServiceImpl implements AccountTypeService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AccountTypeDTO> getAllAccountType(Pageable pageable) {
-        log.debug("Fetching all application language code, page: {}", pageable.getPageNumber());
+        log.debug("Fetching all account type, page: {}", pageable.getPageNumber());
         Page<AccountType> page = repository.findAll(pageable);
         return new PageImpl<>(
                 page.map(mapper::toDto).getContent(),
@@ -38,26 +40,29 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AccountTypeDTO> getAccountTypeById(Long id) {
-        log.debug("Fetching application language code with ID: {}", id);
+        log.debug("Fetching account type with ID: {}", id);
         return repository.findById(id)
                 .map(mapper::toDto);
     }
 
     @Override
+    @Transactional
     public AccountTypeDTO saveAccountType(AccountTypeDTO accountTypeDTO) {
-        log.info("Saving new application language code");
+        log.info("Saving new account type");
         AccountType entity = mapper.toEntity(accountTypeDTO);
         AccountType saved = repository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public AccountTypeDTO updateAccountType(Long id, AccountTypeDTO accountTypeDTO) {
-        log.info("Updating application language code with ID: {}", id);
+        log.info("Updating account type with ID: {}", id);
 
         AccountType existing = repository.findById(id)
-                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("language code not found with ID: " + id));
+                .orElseThrow(() -> new ApplicationConfigurationNotFoundException("account type not found with ID: " + id));
 
         // Optionally, update only mutable fields instead of full replacement
         AccountType toUpdate = mapper.toEntity(accountTypeDTO);
@@ -68,11 +73,12 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteAccountTypeById(Long id) {
-        log.info("Deleting application language code with ID: {}", id);
+        log.info("Deleting account type with ID: {}", id);
 
         if (!repository.existsById(id)) {
-            throw new ApplicationConfigurationNotFoundException("language code not found with ID: " + id);
+            throw new ApplicationConfigurationNotFoundException("account type not found with ID: " + id);
         }
 
         repository.deleteById(id);
@@ -80,6 +86,7 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     }
 
     @Override
+    @Transactional
     public boolean softDeleteAccountTypeById(Long id) {
 
         return repository.findByIdAndDeletedFalse(id).map(entity -> {
