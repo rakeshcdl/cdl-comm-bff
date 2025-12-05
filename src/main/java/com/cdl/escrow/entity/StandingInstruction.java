@@ -60,6 +60,8 @@ public class StandingInstruction implements Serializable {
 
     private ZonedDateTime nextExecutionDateTime;
 
+    private String remarks;
+
 
     @OneToMany(mappedBy = "standingInstruction")
     @JsonIgnore
@@ -74,18 +76,23 @@ public class StandingInstruction implements Serializable {
     private EscrowAgreement dealNo;
 
     @ManyToOne
+    @JsonIgnore
     private ApplicationSetting status;
 
     @ManyToOne
+    @JsonIgnore
     private ApplicationSetting transferType;
 
     @ManyToOne
+    @JsonIgnore
     private ApplicationSetting occurrence;
 
     @ManyToOne
+    @JsonIgnore
     private ApplicationSetting recurringFrequency;
 
     @ManyToOne
+    @JsonIgnore
     private ApplicationSetting holidaySetup;
 
     @ManyToOne
@@ -100,9 +107,36 @@ public class StandingInstruction implements Serializable {
     private StandingInstruction dependence;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private TaskStatus taskStatus;
 
     private Boolean enabled ;
 
     private Boolean deleted ;
+
+    @ManyToOne
+    @JsonIgnore
+    private EscrowAccount toAccount;
+
+    @ManyToOne
+    @JsonIgnore
+    private ApplicationSetting paymentType;
+
+    private String swiftCode;
+
+    private BigDecimal creditAmountCap;
+
+    private BigDecimal creditAmount;
+
+    private Integer priority;
+
+    private Double recentPercentage;
+
+    @ManyToOne
+    @JsonIgnore
+    private Beneficiary beneficiaryName;
+
+    @ManyToOne
+    @JsonIgnore
+    private ApplicationSetting resetCounter;
 }

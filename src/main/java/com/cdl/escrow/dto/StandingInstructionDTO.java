@@ -66,4 +66,26 @@ public class StandingInstructionDTO implements Serializable {
     private Boolean enabled ;
 
     private Boolean deleted ;
+
+    // Added new field
+
+    private String remarks;
+
+    private EscrowAccountDTO toAccountDTO;
+
+    private ApplicationSettingDTO paymentTypeDTO;
+
+    private String swiftCode;
+
+    private BigDecimal creditAmountCap;
+
+    private BigDecimal creditAmount;
+
+    private Integer priority;
+
+    private Double recentPercentage;
+
+    private BeneficiaryDTO beneficiaryNameDTO;
+
+    private ApplicationSettingDTO resetCounterDTO;
 }
