@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+import org.hibernate.annotations.Fetch;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
@@ -53,21 +54,21 @@ public class StandingInstructionBeneficiary implements Serializable {
     private String paymentModeCode;       // e.g., NEFT, RTGS, SWIFT, INTERNAL
 
 
-    @OneToMany(mappedBy = "standingInstructionBeneficiary")
+    @OneToMany(mappedBy = "standingInstructionBeneficiary", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<TransactionProcessingHistory> histories = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Beneficiary beneficiaryName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ApplicationSetting paymentMode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ApplicationSetting currency;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private StandingInstruction standingInstruction;
 

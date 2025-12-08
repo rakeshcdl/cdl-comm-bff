@@ -63,46 +63,46 @@ public class StandingInstruction implements Serializable {
     private String remarks;
 
 
-    @OneToMany(mappedBy = "standingInstruction")
+    @OneToMany(mappedBy = "standingInstruction", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<ScheduledJob> scheduledJobs = new HashSet<>();
 
-    @OneToMany(mappedBy = "standingInstruction")
+    @OneToMany(mappedBy = "standingInstruction",fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<StandingInstructionBeneficiary> siPaymentBeneficiaries = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private EscrowAgreement dealNo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private ApplicationSetting status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private ApplicationSetting transferType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private ApplicationSetting occurrence;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private ApplicationSetting recurringFrequency;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private ApplicationSetting holidaySetup;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ApplicationSetting dependentScenario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private EscrowAccount formAccountDr;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private StandingInstruction dependence;
 
@@ -114,11 +114,11 @@ public class StandingInstruction implements Serializable {
 
     private Boolean deleted ;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private EscrowAccount toAccount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private ApplicationSetting paymentType;
 
@@ -132,11 +132,11 @@ public class StandingInstruction implements Serializable {
 
     private Double recentPercentage;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Beneficiary beneficiaryName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private ApplicationSetting resetCounter;
 }
