@@ -1,6 +1,5 @@
 package com.cdl.escrow.controller;
 
-import com.cdl.escrow.criteriaservice.AuthorizedSignatoryCriteriaService;
 import com.cdl.escrow.dto.AuthorizedSignatoryDTO;
 import com.cdl.escrow.exception.BadRequestAlertException;
 import com.cdl.escrow.repository.AuthorizedSignatoryRepository;

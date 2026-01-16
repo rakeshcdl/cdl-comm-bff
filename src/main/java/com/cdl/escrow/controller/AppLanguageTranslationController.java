@@ -123,24 +123,24 @@ public class AppLanguageTranslationController {
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/build-partner")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getBuildPartnerAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of build-partner");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getBuildPartnerAppLanguageTranslationData();
+    @GetMapping("/entities")
+    public ResponseEntity<List<AppLanguageTranslationDTO>> getEntitiesAppLanguageTranslationData() {
+        log.info("Fetching all app config translation of entities");
+        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getEntitiesAppLanguageTranslationData();
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/build-partner-assests")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getBuildPartnerAssestAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of build-partner-assests");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getBuildPartnerAssestAppLanguageTranslationData();
+    @GetMapping("/masters")
+    public ResponseEntity<List<AppLanguageTranslationDTO>> getMastersAppLanguageTranslationData() {
+        log.info("Fetching all app config translation of masters");
+        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getMastersAppLanguageTranslationData();
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/capital-partner")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getCapitalPartnerAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of capital-partner");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getCapitalPartnerAppLanguageTranslationData();
+    @GetMapping("/common")
+    public ResponseEntity<List<AppLanguageTranslationDTO>> getCommonAppLanguageTranslationData() {
+        log.info("Fetching all app config translation of common");
+        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getCommonAppLanguageTranslationData();
         return ResponseEntity.ok(page);
     }
 
@@ -151,24 +151,19 @@ public class AppLanguageTranslationController {
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/processed-transactions")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getTProcessedransactionsAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of processed transactions");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getTransactionsAppLanguageTranslationData();
+
+    @GetMapping("/reports")
+    public ResponseEntity<List<AppLanguageTranslationDTO>> getReportTranslationData() {
+        log.info("Fetching all app config translation of reports");
+        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getReportTranslationData();
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/pending-transactions")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getPendingTransactionsAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of pending transactions");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getTransactionsAppLanguageTranslationData();
-        return ResponseEntity.ok(page);
-    }
 
-    @GetMapping("/discarded-transactions")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getDiscardedTransactionsAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of discarded transactions");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getTransactionsAppLanguageTranslationData();
+    @GetMapping("/dashboard")
+    public ResponseEntity<List<AppLanguageTranslationDTO>> getDashboardTranslationData() {
+        log.info("Fetching all app config translation of dashboard");
+        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getDashboardTranslationData();
         return ResponseEntity.ok(page);
     }
 
@@ -179,24 +174,11 @@ public class AppLanguageTranslationController {
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/surety-bond")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getSuretyBondAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of surety-bond");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getSuretyBondAppLanguageTranslationData();
-        return ResponseEntity.ok(page);
-    }
-
-    @GetMapping("/fee-repush")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getFeeRepushAppLanguageTranslationData() {
-        log.info("Fetching all app config translation of fee repush");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getFeeRepushAppLanguageTranslationData();
-        return ResponseEntity.ok(page);
-    }
 
     @GetMapping("/user-management")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getUserdAppLanguageTranslationData() {
+    public ResponseEntity<List<AppLanguageTranslationDTO>> getUserAppLanguageTranslationData() {
         log.info("Fetching all app config translation of user management");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getUserdAppLanguageTranslationData();
+        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getUserAppLanguageTranslationData();
         return ResponseEntity.ok(page);
     }
 
@@ -208,9 +190,9 @@ public class AppLanguageTranslationController {
     }
 
     @GetMapping("/group-management")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getSGroupAppLanguageTranslationData() {
+    public ResponseEntity<List<AppLanguageTranslationDTO>> getGroupAppLanguageTranslationData() {
         log.info("Fetching all app config translation of group management");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getSGroupAppLanguageTranslationData();
+        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getGroupAppLanguageTranslationData();
         return ResponseEntity.ok(page);
     }
 
@@ -227,18 +209,4 @@ public class AppLanguageTranslationController {
     }
 
 
-    @GetMapping("/reports")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getReportsTranslationData() {
-        log.info("Fetching all app config translation of reports");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getReportTranslationData();
-        return ResponseEntity.ok(page);
-    }
-
-
-    @GetMapping("/dashboard")
-    public ResponseEntity<List<AppLanguageTranslationDTO>> getDashboardTranslationData() {
-        log.info("Fetching all app config translation of dashboard");
-        List<AppLanguageTranslationDTO> page = appLanguageTranslationService.getDashboardTranslationData();
-        return ResponseEntity.ok(page);
-    }
 }

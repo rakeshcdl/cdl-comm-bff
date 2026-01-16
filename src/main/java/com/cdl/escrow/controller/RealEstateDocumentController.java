@@ -1,6 +1,7 @@
 package com.cdl.escrow.controller;
 
 import com.cdl.escrow.criteria.RealEstateDocumentCriteria;
+import com.cdl.escrow.criteriaservice.RealEstateDocumentCriteriaService;
 import com.cdl.escrow.dto.RealEstateDocumentDTO;
 import com.cdl.escrow.entity.RealEstateDocument;
 import com.cdl.escrow.exception.BadRequestAlertException;
@@ -42,19 +43,22 @@ public class RealEstateDocumentController {
 
     private final RealEstateDocumentRepository repository;
 
+    private final RealEstateDocumentCriteriaService realEstateDocumentCriteriaService;
+
+
     private static final String ENTITY_NAME = "REAL_ESTATE_DOCUMENT";
 
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(
             "pdf", "jpg", "jpeg", "png", "gif", "txt", "csv", "xlsx", "docx"
     );
 
-  /*  @GetMapping
+    @GetMapping
     public ResponseEntity<Page<RealEstateDocumentDTO>> getAllRealEstateDocumentByCriteria(@ParameterObject RealEstateDocumentCriteria criteria,
-                                                                                                                      @ParameterObject  Pageable pageable) {
+                                                                                          @ParameterObject  Pageable pageable) {
         Page<RealEstateDocumentDTO> page = realEstateDocumentCriteriaService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page);
-    }*/
+    }
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<RealEstateDocumentDTO>> getAllRealEstateDocument(

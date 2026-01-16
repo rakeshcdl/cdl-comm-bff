@@ -33,29 +33,25 @@ public interface AppLanguageTranslationService {
 
     List<AppLanguageTranslationDTO> getAllAppLanguageTranslationData();
 
-    List<AppLanguageTranslationDTO> getBuildPartnerAppLanguageTranslationData();
-
-    List<AppLanguageTranslationDTO> getBuildPartnerAssestAppLanguageTranslationData();
-
-    List<AppLanguageTranslationDTO> getCapitalPartnerAppLanguageTranslationData();
-
     List<AppLanguageTranslationDTO> getTransactionsAppLanguageTranslationData();
 
     List<AppLanguageTranslationDTO> getPaymentsAppLanguageTranslationData();
 
-    List<AppLanguageTranslationDTO> getSuretyBondAppLanguageTranslationData();
-
     boolean softDeleteAppLanguageTranslationById(Long id);
 
-    List<AppLanguageTranslationDTO> getUserdAppLanguageTranslationData();
+    List<AppLanguageTranslationDTO> getUserAppLanguageTranslationData();
 
     List<AppLanguageTranslationDTO> getRoleAppLanguageTranslationData();
 
-    List<AppLanguageTranslationDTO> getSGroupAppLanguageTranslationData();
-
-    List<AppLanguageTranslationDTO> getFeeRepushAppLanguageTranslationData();
+    List<AppLanguageTranslationDTO> getGroupAppLanguageTranslationData();
 
     List<AppLanguageTranslationDTO> getReportTranslationData();
 
     List<AppLanguageTranslationDTO> getDashboardTranslationData();
+
+    List<AppLanguageTranslationDTO> getEntitiesAppLanguageTranslationData();
+
+    List<AppLanguageTranslationDTO> getMastersAppLanguageTranslationData();
+
+    List<AppLanguageTranslationDTO> getCommonAppLanguageTranslationData();
 }

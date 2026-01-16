@@ -225,7 +225,7 @@ public RealEstateDocument storeFile(MultipartFile file, String module, Long reco
 
 
 
-    // ✅ Download by ID (resolves RELATIVE location under configured base root)
+    //  Download by ID (resolves RELATIVE location under configured base root)
     public org.springframework.core.io.Resource loadFileById(Long docId) {
         RealEstateDocument doc = repository.findById(docId)
                 .orElseThrow(() -> new RuntimeException("Document not found with ID: " + docId));
@@ -260,7 +260,7 @@ public RealEstateDocument storeFile(MultipartFile file, String module, Long reco
         }
     }
 
-    // ✅ Download by Name (latest from module root)
+    //  Download by Name (latest from module root)
     public org.springframework.core.io.Resource loadFileByName(String module, String fileName) {
         String safeModule = sanitizeSimple(module);
         if (safeModule.isBlank()) {
