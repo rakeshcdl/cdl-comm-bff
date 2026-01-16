@@ -5,6 +5,7 @@ import com.cdl.escrow.dto.AuthorizedSignatoryDTO;
 import com.cdl.escrow.entity.ApplicationSetting;
 import com.cdl.escrow.entity.Attachment;
 import com.cdl.escrow.entity.AuthorizedSignatory;
+import com.cdl.escrow.entity.Party;
 import com.cdl.escrow.filter.BaseSpecificationBuilder;
 import com.cdl.escrow.mapper.AuthorizedSignatoryMapper;
 import com.cdl.escrow.repository.AuthorizedSignatoryRepository;
@@ -61,9 +62,16 @@ public class AuthorizedSignatoryCriteriaService extends BaseSpecificationBuilder
                 // relationships
 
                 if (criteria.getCifExistsId() != null) {
-                    Join<Attachment, ApplicationSetting> join = root.join("cifExists", JoinType.LEFT);
+                    Join<AuthorizedSignatory, ApplicationSetting> join = root.join("cifExists", JoinType.LEFT);
                     addLongFilterOnJoin(cb, join, predicates, "id", criteria.getCifExistsId());
                 }
+
+                if (criteria.getPartyId() != null) {
+                    Join<AuthorizedSignatory, Party> join = root.join("party", JoinType.LEFT);
+                    addLongFilterOnJoin(cb, join, predicates, "id", criteria.getCifExistsId());
+                }
+
+
 
 
             }
