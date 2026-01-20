@@ -84,9 +84,13 @@ public class EscrowAccount implements Serializable {
     @ManyToOne
     private ApplicationSetting unitaryPayment;
 
+    /*@ManyToOne
+    @JsonIgnore
+    private AccountType accountType;*/
+
     @ManyToOne
     @JsonIgnore
-    private AccountType accountType;
+    private ApplicationSetting accountType;
 
     @ManyToOne
     @JsonIgnore

@@ -39,6 +39,7 @@ public class AgreementParametersCriteriaService extends BaseSpecificationBuilder
             if(criteria!=null) {
                 addLongFilter(cb, root, predicates, "id", criteria.getId());
                 addStringFilter(cb, root, predicates, "UUID", criteria.getUUID(), true);
+                addStringFilter(cb, root, predicates, "parametersRefNo", criteria.getUUID(), true);
                 addZonedDateTimeFilter(cb, root, predicates, "agreementEffectiveDate", criteria.getAgreementEffectiveDate());
                 addZonedDateTimeFilter(cb, root, predicates, "agreementExpiryDate", criteria.getAgreementExpiryDate());
                 addStringFilter(cb, root, predicates, "agreementRemarks", criteria.getAgreementRemarks(),true);

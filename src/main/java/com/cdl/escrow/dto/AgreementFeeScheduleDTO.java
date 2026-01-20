@@ -16,6 +16,8 @@ public class AgreementFeeScheduleDTO implements Serializable {
 
     private String UUID;
 
+    private String regulatoryRefNo;
+
     private ZonedDateTime effectiveStartDate;
 
     private ZonedDateTime effectiveEndDate;

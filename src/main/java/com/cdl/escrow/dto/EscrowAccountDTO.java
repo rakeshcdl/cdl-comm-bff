@@ -57,7 +57,9 @@ public class EscrowAccountDTO implements Serializable {
 
     private ApplicationSettingDTO unitaryPaymentDTO;
 
-    private AccountTypeDTO accountTypeDTO;
+    //private AccountTypeDTO accountTypeDTO;
+
+    private ApplicationSettingDTO accountTypeDTO;
 
     private AccountTypeCategoryDTO accountTypeCategoryDTO;
 

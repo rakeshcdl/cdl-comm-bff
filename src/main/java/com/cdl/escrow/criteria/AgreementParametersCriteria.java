@@ -21,6 +21,8 @@ public class AgreementParametersCriteria implements Serializable {
 
     private StringFilter UUID;
 
+    private StringFilter parametersRefNo;
+
     private ZonedDateTimeFilter agreementEffectiveDate;
 
     private ZonedDateTimeFilter agreementExpiryDate;

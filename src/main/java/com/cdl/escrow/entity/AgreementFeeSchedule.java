@@ -33,6 +33,8 @@ public class AgreementFeeSchedule {
 
     private String UUID;
 
+    private String regulatoryRefNo;
+
     private ZonedDateTime effectiveStartDate;
 
     private ZonedDateTime effectiveEndDate;

@@ -38,6 +38,7 @@ public class AgreementFeeScheduleCriteriaService extends BaseSpecificationBuilde
             if(criteria!=null) {
                 addLongFilter(cb, root, predicates, "id", criteria.getId());
                 addStringFilter(cb, root, predicates, "UUID", criteria.getUUID(), true);
+                addStringFilter(cb, root, predicates, "regulatoryRefNo", criteria.getUUID(), true);
                 addZonedDateTimeFilter(cb, root, predicates, "effectiveStartDate", criteria.getEffectiveStartDate());
                 addZonedDateTimeFilter(cb, root, predicates, "effectiveEndDate", criteria.getEffectiveEndDate());
                 addStringFilter(cb, root, predicates, "operatingLocation", criteria.getOperatingLocation(),true);

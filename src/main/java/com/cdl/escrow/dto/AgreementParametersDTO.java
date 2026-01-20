@@ -16,6 +16,8 @@ public class AgreementParametersDTO implements Serializable {
 
     private String UUID;
 
+    private String parametersRefNo;
+
     private ZonedDateTime agreementEffectiveDate;
 
     private ZonedDateTime agreementExpiryDate;

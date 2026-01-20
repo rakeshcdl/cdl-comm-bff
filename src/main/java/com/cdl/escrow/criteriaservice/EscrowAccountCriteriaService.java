@@ -93,7 +93,7 @@ public class EscrowAccountCriteriaService extends BaseSpecificationBuilder<Escro
                 }
 
                 if (criteria.getAccountTypeId() != null) {
-                    Join<EscrowAccount, AccountType> join = root.join("accountType", JoinType.LEFT);
+                    Join<EscrowAccount, ApplicationSetting> join = root.join("accountType", JoinType.LEFT);
                     addLongFilterOnJoin(cb, join, predicates, "id", criteria.getAccountTypeId());
                 }
 

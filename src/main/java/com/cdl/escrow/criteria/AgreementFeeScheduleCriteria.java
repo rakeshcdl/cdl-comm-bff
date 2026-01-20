@@ -20,6 +20,8 @@ public class AgreementFeeScheduleCriteria implements Serializable {
 
     private StringFilter UUID;
 
+    private StringFilter regulatoryRefNo;
+
     private ZonedDateTimeFilter effectiveStartDate;
 
     private ZonedDateTimeFilter effectiveEndDate;

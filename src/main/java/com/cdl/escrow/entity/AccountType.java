@@ -45,10 +45,10 @@ public class AccountType implements Serializable {
    @JsonIgnore
     private Set<AccountTypeCategory> childBankAccountTypes = new HashSet<>();
 
-    @OneToMany(mappedBy = "accountType")
+   /* @OneToMany(mappedBy = "accountType")
     @JsonIgnore
     private Set<EscrowAccount> escrowAccounts = new HashSet<>();
-
+*/
     private Boolean enabled ;
 
     private Boolean deleted ;
