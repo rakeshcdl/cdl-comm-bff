@@ -39,6 +39,10 @@ public class CurrencyCriteriaService extends BaseSpecificationBuilder<Currency> 
                 addStringFilter(cb, root, predicates, "uuid", criteria.getUuid(), true);
                 addStringFilter(cb, root, predicates, "description", criteria.getDescription(), true);
                 addBooleanFilter(cb, root, predicates, "isEnabled", criteria.getEnabled());
+
+                addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
+                addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

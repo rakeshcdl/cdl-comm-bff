@@ -39,6 +39,9 @@ public class InvestmentCriteriaService extends BaseSpecificationBuilder<Investme
                 addStringFilter(cb, root, predicates, "investmentName", criteria.getInvestmentName(), true);
                 addStringFilter(cb, root, predicates, "investmentDescription", criteria.getInvestmentDescription(), true);
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
+                addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
+                addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

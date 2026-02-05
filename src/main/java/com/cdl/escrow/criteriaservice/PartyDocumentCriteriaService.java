@@ -43,6 +43,9 @@ public class PartyDocumentCriteriaService extends BaseSpecificationBuilder<Party
                 addStringFilter(cb, root, predicates, "documentTypeCode", criteria.getDocumentTypeCode(),true);
                 addBooleanFilter(cb, root, predicates, "active", criteria.getActive());
 
+                addBooleanFilter(cb, root, predicates, "enabled", criteria.getEnabled());
+                addBooleanFilter(cb, root, predicates, "deleted", criteria.getDeleted());
+
                 // relationships
 
                 if (criteria.getBeneficiaryId() != null) {
